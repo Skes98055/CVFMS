@@ -1,5 +1,7 @@
 可以使用Xampp或是Appserv架設
 
+或是不想設定可以用這邊現成的
+
 帳號密碼請記住
 
 請在phpmyadmin先建立一個topictest的資料庫
