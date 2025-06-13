@@ -1,3 +1,5 @@
+可以使用Xampp或是Appserv架設
+帳號密碼請記住
 有遇到php檔案都要改掉這一部分，才能在本地端使用
 
 ![image](https://github.com/user-attachments/assets/fcaa2a74-b720-4e0e-861d-63eacf783955)
