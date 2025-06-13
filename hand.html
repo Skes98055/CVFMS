@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pose Detection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.4/pose.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <style>
+        video, canvas {
+            display: block;
+            margin: 0 auto;
+            border: 1px solid black;
+        }
+        #status {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="status">Detecting...</div>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const canvasCtx = canvas.getContext('2d');
+        const statusElement = document.getElementById('status');
+
+        // Initialize MediaPipe Pose
+        const pose = new mpPose.Pose({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.4/${file}`,
+        });
+
+        // Handle pose results
+        pose.onResults(results => {
+            if (results.poseLandmarks) {
+                analyzePose(results.poseLandmarks);
+            }
+        });
+
+        // Setup webcam
+        async function setupCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            await new Promise(resolve => video.onloadedmetadata = resolve);
+            video.play();
+        }
+
+        // Analyze pose landmarks
+        function analyzePose(landmarks) {
+            const shoulderLeft = landmarks[mpPose.PoseLandmark.LEFT_SHOULDER];
+            const shoulderRight = landmarks[mpPose.PoseLandmark.RIGHT_SHOULDER];
+            const nose = landmarks[mpPose.PoseLandmark.NOSE];
+            const earLeft = landmarks[mpPose.PoseLandmark.LEFT_EAR];
+            const earRight = landmarks[mpPose.PoseLandmark.RIGHT_EAR];
+
+            if (shoulderLeft && shoulderRight && nose && earLeft && earRight) {
+                const shoulderAngle = calculateShoulderAngle(shoulderLeft, shoulderRight, nose);
+                const earDistance = calculateEarDistance(earLeft, earRight);
+
+                if (earDistance < 0.15) { // If ears are close together, likely facing the screen
+                    statusElement.textContent = 'User is facing the screen.';
+                } else {
+                    statusElement.textContent = 'User is not facing the screen.';
+                }
+            }
+        }
+
+        // Calculate shoulder angle
+        function calculateShoulderAngle(shoulderLeft, shoulderRight, nose) {
+            const shoulderDistance = Math.sqrt(
+                Math.pow(shoulderRight.x - shoulderLeft.x, 2) +
+                Math.pow(shoulderRight.y - shoulderLeft.y, 2)
+            );
+
+            const noseToShoulderMidpoint = Math.sqrt(
+                Math.pow(nose.x - (shoulderLeft.x + shoulderRight.x) / 2, 2) +
+                Math.pow(nose.y - (shoulderLeft.y + shoulderRight.y) / 2, 2)
+            );
+
+            return noseToShoulderMidpoint / shoulderDistance;
+        }
+
+        // Calculate distance between ears
+        function calculateEarDistance(earLeft, earRight) {
+            return Math.sqrt(
+                Math.pow(earRight.x - earLeft.x, 2) +
+                Math.pow(earRight.y - earLeft.y, 2)
+            );
+        }
+
+        // Real-time processing loop
+        function onFrame() {
+            canvasCtx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            pose.send({ image: canvas });
+            requestAnimationFrame(onFrame);
+        }
+
+        // Initialize
+        setupCamera().then(() => {
+            onFrame();
+        });
+    </script>
+</body>
+</html>
