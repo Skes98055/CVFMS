@@ -4,9 +4,11 @@
 
 請在phpmyadmin先建立一個topictest的資料庫
 
-再將sql檔案匯入
+再將[sql](https://github.com/Skes98055/cvfms/blob/01467feca77a55659af2e1adce451c16f5fb47b5/topictest.sql)檔案匯入
 
-[topictest.sql](https://github.com/Skes98055/cvfms/blob/01467feca77a55659af2e1adce451c16f5fb47b5/topictest.sql)
+Appeserv將專案解壓縮到C:\AppServ\www裡，裡面建議放一個資料夾(如example)，瀏覽器輸入localhost/example
+
+Xampp將專案解壓縮到C:\xampp\htdocs裡，裡面建議放一個資料夾(如example)，瀏覽器輸入localhost/example
 
 有遇到php檔案都要改掉這一部分，才能在本地端使用
 
