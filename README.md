@@ -6,7 +6,7 @@
 
 再將sql檔案匯入
 
-topictest.sql
+[topictest.sql](https://github.com/Skes98055/cvfms/blob/01467feca77a55659af2e1adce451c16f5fb47b5/topictest.sql)
 
 有遇到php檔案都要改掉這一部分，才能在本地端使用
 
