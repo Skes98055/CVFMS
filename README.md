@@ -25,6 +25,7 @@ forgot_password.php這邊如果要改自己的gmail
 stmp密碼可以參考這篇文章
 
 https://www.ibest.com.tw/news-detail/gmail-smtp/
+
 改下面截圖的部分
-![image](https://github.com/user-attachments/assets/392e1e18-98f1-40f5-9e2c-112e9fb970c7)
+![螢幕擷取畫面 2025-06-13 150004](https://github.com/user-attachments/assets/ddeffd98-0d52-4786-b68d-855ebb3b8bd1)
 
