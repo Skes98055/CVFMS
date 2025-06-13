@@ -17,3 +17,11 @@ Xampp將專案解壓縮到C:\xampp\htdocs裡，裡面建議放一個資料夾(�
 有遇到php檔案都要改掉這一部分，才能在本地端使用
 
 ![image](https://github.com/user-attachments/assets/fcaa2a74-b720-4e0e-861d-63eacf783955)
+
+forgot_password.php這邊如果要改自己的gmail
+這邊我是用gmail為例，
+stmp密碼可以參考這篇文章
+https://www.ibest.com.tw/news-detail/gmail-smtp/
+改下面截圖的部分
+![image](https://github.com/user-attachments/assets/392e1e18-98f1-40f5-9e2c-112e9fb970c7)
+
